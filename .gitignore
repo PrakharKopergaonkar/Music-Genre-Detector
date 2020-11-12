@@ -4,3 +4,4 @@ Project_env/
 .vscode/
 Project_env/
 webapp/.vscode/
+__pycache__/
