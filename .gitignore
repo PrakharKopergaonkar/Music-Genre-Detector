@@ -1,2 +1,6 @@
 genres/
-webapp/
+.ipynb_checkpoints/
+Project_env/
+.vscode/
+Project_env/
+webapp/.vscode/
