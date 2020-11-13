@@ -1,7 +1,5 @@
 genres/
 .ipynb_checkpoints/
 Project_env/
+webapp/.vscode
 .vscode/
-Project_env/
-webapp/.vscode/
-__pycache__/
