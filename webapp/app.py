@@ -6,17 +6,12 @@ from werkzeug.utils import secure_filename
 import pickle
 import os
 
-Upload_folder = '/Users/PRAKHAR/Desktop/work/Major Project/music genre detector/webapp/upload_files'
-Allowed_extensions = "wav"
 
+Upload_folder = '/Users/PRAKHAR/Desktop/work/Major Project/music genre detector/webapp/Upload_GenreFiles'
 
 app = Flask(__name__, template_folder="templates")
 app.config['UPLOAD_FOLDER'] = Upload_folder
 
-#Checks if the uploaded file is valid or not
-def isAllowedFile(filename):
-    a = "." in filename and filename.rsplit('.',1)[1].lower() == Allowed_extensions
-    return a
 
 #returns bin file of the model we have saved
 def return_model():
@@ -24,37 +19,35 @@ def return_model():
         model = pickle.load(f_in)
     return model
 
-@app.route('/', methods=['GET','POST'])
-def upload_and_predict():
+
+@app.route('/')
+def index():
+    return render_template('upload_page.html')
+
+@app.route('/Music_Genre', methods=['GET','POST'])
+def Music_Genre():
     if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file Part')
-
+        
         file = request.files['file']
+        
+        # secure the file
+        filename = secure_filename(file.filename)
 
-        #if no file is selected
-        if(file == ''):
-            flash('No selected file')
-            return redirect(request.url)
+        #save the upload file to upload_files folder
+        file.save(os.path.join(Upload_folder, filename))
 
-        if(file and isAllowedFile(file.filename)):
-            # secure the file
-            filename = secure_filename(file.filename)
+        #load datset for model
+        dataset = loadDataset("model_files/my.dat",0.66)
 
-            #save the upload file to upload_files folder
-            file.save(os.path.join(Upload_folder, filename))
+        #Return model
+        model = return_model()
 
-            #load datset for model
-            dataset = loadDataset("model_files/my.dat",0.66)
+        #resullt of prediction made
+        result = predict_genre(f"Upload_GenreFiles/{filename}",dataset,model)
 
-            #Return model
-            model = return_model()
+        return render_template("Music_Genre.html", result=result)
+    return render_template("Music_Genre.html")
 
-            #resullt of prediction made
-            result = predict_genre(f"upload_files/{filename}",dataset,model)
-
-            return render_template("upload_file.html", result=result)
-    return render_template("upload_file.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -78,11 +78,6 @@ def predict_genre(filename,dataset,model):
         pred=model.nearestClass(model.getNeighbors(feature , 5,dataset))
         return result[pred]
     
-# Save mode
-with open("model.bin", "wb") as f_out:
-    knn = Model()
-    pickle.dump(knn,f_out)
-    f_out.close()
 
 # with open("model.bin", "rb") as f_in:
 #     model = pickle.load(f_in)

@@ -1,0 +1,100 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      https://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Engineer's Thesis Project - Detecting instruments in audio excerpts with Deep Neural Network">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Instronizer</title>
+
+    <!-- TODO change favicon - multiple size combinations -->
+    <!-- Add to homescreen for Chrome on Android -->
+    <!-- <meta name="mobile-web-app-capable" content="yes"> -->
+    <!-- <link rel="icon" sizes="192x192" href="images/android-desktop.png"> -->
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black"> -->
+    <!-- <meta name="apple-mobile-web-app-title" content="Material Design Lite"> -->
+    <!-- <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png"> -->
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <!-- <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png"> -->
+    <!-- <meta name="msapplication-TileColor" content="#3372DF"> -->
+
+    <link rel="shortcut icon" href="static/favico.png">
+
+    <link rel="stylesheet" href="static/lib/material_design/material_fonts.css">
+    <link rel="stylesheet" href="static/lib/material_design/material_icons.css">
+    <link rel="stylesheet" href="static/lib/material_design/color_palette/deep_purple_indigo.min.css" />
+    <link rel="stylesheet" href="static/lib/material_design/material.css">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+        <!-- Navigation bar with tabs -->
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+              <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title" style="left: 2%;">Music Instrument And Genre Detector</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="{{url_for('index')}}">Music Instrument Detector</a>
+                    <a class="mdl-navigation__link" href="{{url_for('Music_Genre')}}">Music Genre Detector</a>
+                </nav>
+              </div>
+            </header>
+            <div class="mdl-layout__drawer">
+
+              <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="{{url_for('index')}}">Instrument Detector</a>
+                <a class="mdl-navigation__link" href="{{url_for('Music_Genre')}}">Genre Detector</a>
+              </nav>
+            </div>
+            <div class="mdl-layout-spacer"></div>
+            <main class="mdl-layout__content">
+                {% block content %}
+                {% endblock %}
+            </main>
+          </div>
+
+    <!-- TODO change to real github link 2/2-->
+    <a href="https://github.com/micmarty/instrument-classifier-polyphonic" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">
+        View Source code
+    </a>
+    <script src="static/lib/material_design/material.min.js"></script>
+    <script src="static/lib/jquery/jquery-3.1.1.min.js"></script>
+    <script src="static/lib/wavesurfer/wavesurfer.min.js"></script>
+    <script src="static/lib/wavesurfer/wavesurfer-timeline.min.js"></script>
+    <script src="static/lib/wavesurfer/wavesurfer-regions.min.js"></script>
+    <script src="static/lib/google_charts/loader.min.js"></script>
+   
+    <!-- Custom JavaScript -->
+    <!-- Order must be preserved -->
+    <script>
+        var maxUploadSizeFromJinja = parseInt('{{max_upload}}');
+    </script>
+    <script src="static/waveplot.js"></script>
+    <script src="static/upload.js"></script>
+    <script src="static/alert_boxes.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+<script>
+    function validate() {
+        var valid = true;
+        var file_name = "";
+        var file_type = "";
+        var error_msg = "";
+        var display_error = document.getElementById('file_error');
+        var file = document.getElementById("uploadFileInput");
+        var file_type = file.files[0].type;
+        console.log(file_type)
+        if(file_type!="audio/wav") {
+            valid = false;
+            error_msg  = error_msg + "\n* Only 'WAV' file supported.";
+        }
+        if(valid==true) {
+            submit_button = document.getElementById("submitform")
+            submit_button.disabled = false
+            return true;
+        }
+        else {
+            display_error.innerHTML = error_msg;
+            file.value = ""
+        }
+    }
+</script>
+<form method=post enctype=multipart/form-data>
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+        <!-- Box with upload glyphicon -->
+        <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--primary mdl-color-text--white">
+            <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
+                <!-- File input -->
+                <i id="uploadGlyph" class="material-icons" style="font-size: 200px; left: 5%; color: whitesmoke">file_upload</i>
+                <input id="uploadFileInput" type="file" name="file" onchange="validate()">
+                </input>
+            </div>
+        </header>
+        <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+            <!-- Text -->
+            <div class="mdl-card__supporting-text">
+                <h4>Choose audio file to Detect Genre</h4>
+                WAV files allowed (below 100 MB)
+                <br/>
+                <p id="file_error" style="color: red;"> </p>
+                <input type=submit value=Submit id="submitform" class="mdl-button mdl-js-button mdl-button--raised" disabled>
+            </div>
+            <!-- Bottom -->
+        </div>
+    </section>
+</form>
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="alert info" style="width: 100%">
+        <span class="closebtn">&times;</span>
+        <strong>Info!</strong> Music Genre was taught to detect 10 Genres:
+        <br/> Blues Classical Country Disco Hiphop Jazz Metal Pop Reggae Rock
+        <br/>
+    </div>
+</section>
+{% if result %}
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="alert info" style="width: 100%">
+        <span class="closebtn">&times;</span>
+        <strong>Result: </strong> Music Genre detected is {{ result }}
+    </div>
+</section>
+{% endif %}
+{% endblock %}
