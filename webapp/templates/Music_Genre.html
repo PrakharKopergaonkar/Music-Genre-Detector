@@ -24,7 +24,10 @@
             file.value = ""
         }
     }
+    var modalTriggers = document.querySelectorAll('[data-toggle="modal"]');
+
 </script>
+
 <form method=post enctype=multipart/form-data>
     <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
         <!-- Box with upload glyphicon -->
@@ -44,6 +47,9 @@
                 <br/>
                 <p id="file_error" style="color: red;"> </p>
                 <input type=submit value=Submit id="submitform" class="mdl-button mdl-js-button mdl-button--raised" disabled>
+                {% if result %}
+                <p id="file_error" style="color: blue;"> Genre : {{result}}</p>
+                {% endif %}
             </div>
             <!-- Bottom -->
         </div>
@@ -57,12 +63,4 @@
         <br/>
     </div>
 </section>
-{% if result %}
-<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-    <div class="alert info" style="width: 100%">
-        <span class="closebtn">&times;</span>
-        <strong>Result: </strong> Music Genre detected is {{ result }}
-    </div>
-</section>
-{% endif %}
 {% endblock %}

@@ -19,6 +19,9 @@ def return_model():
         model = pickle.load(f_in)
     return model
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/')
 def index():
