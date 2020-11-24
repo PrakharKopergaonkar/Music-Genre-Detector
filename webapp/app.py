@@ -19,6 +19,7 @@ def return_model():
         model = pickle.load(f_in)
     return model
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -27,10 +28,11 @@ def about():
 def index():
     return render_template('upload_page.html')
 
-@app.route('/Music_Genre', methods=['GET','POST'])
+
+@app.route('/Music_Genre', methods=['GET', 'POST'])
 def Music_Genre():
-    if request.method == 'POST':
-        
+    print(request.method)
+    if(request.method=='POST'):
         file = request.files['file']
         
         # secure the file
@@ -47,8 +49,8 @@ def Music_Genre():
 
         #resullt of prediction made
         result = predict_genre(f"Upload_GenreFiles/{filename}",dataset,model)
-
-        return render_template("Music_Genre.html", result=result)
+        print(result)
+        return render_template("Music_Genre.html",result=result)
     return render_template("Music_Genre.html")
 
 

@@ -2,11 +2,12 @@
 {% block content %}
 <script>
     function validate() {
+        console.log("hi")
         var valid = true;
-        var file_name = "";
-        var file_type = "";
         var error_msg = "";
         var display_error = document.getElementById('file_error');
+        var display_filename = document.getElementById('file_name');
+        display_filename.innerHTML = "";
         var file = document.getElementById("uploadFileInput");
         var file_type = file.files[0].type;
         console.log(file_type)
@@ -17,6 +18,7 @@
         if(valid==true) {
             submit_button = document.getElementById("submitform")
             submit_button.disabled = false
+            display_filename.innerHTML = file.files[0].name
             return true;
         }
         else {
@@ -24,11 +26,8 @@
             file.value = ""
         }
     }
-    var modalTriggers = document.querySelectorAll('[data-toggle="modal"]');
-
 </script>
-
-<form method=post enctype=multipart/form-data>
+<form enctype="multipart/form-data" method="POST">
     <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
         <!-- Box with upload glyphicon -->
         <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--primary mdl-color-text--white">
@@ -46,15 +45,21 @@
                 WAV files allowed (below 100 MB)
                 <br/>
                 <p id="file_error" style="color: red;"> </p>
-                <input type=submit value=Submit id="submitform" class="mdl-button mdl-js-button mdl-button--raised" disabled>
-                {% if result %}
-                <p id="file_error" style="color: blue;"> Genre : {{result}}</p>
-                {% endif %}
+                <button id="submitform" class="mdl-button mdl-js-button mdl-button--raised" disabled> Submit </button>
+                <p id="file_name" style="color: blue"> </p>
             </div>
-            <!-- Bottom -->
         </div>
     </section>
 </form>
+{% if result %}
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="alert info" style="width: 100%">
+        <span class="closebtn">&times;</span>
+        <strong>Genre :</strong> {{result}}
+        <br/>
+    </div>
+</section>
+{% else %}
 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
     <div class="alert info" style="width: 100%">
         <span class="closebtn">&times;</span>
@@ -63,4 +68,5 @@
         <br/>
     </div>
 </section>
+{% endif %}
 {% endblock %}
