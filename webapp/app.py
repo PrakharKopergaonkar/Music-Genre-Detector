@@ -5,12 +5,27 @@ from model_files.model import Model, loadDataset,predict_genre
 from werkzeug.utils import secure_filename
 import pickle
 import os
-
+from flask_sqlalchemy import SQLAlchemy
+from pathlib import Path
 
 Upload_folder = '/Users/PRAKHAR/Desktop/work/Major Project/music genre detector/webapp/Upload_GenreFiles'
 
 app = Flask(__name__, template_folder="templates")
 app.config['UPLOAD_FOLDER'] = Upload_folder
+db = SQLAlchemy(app)
+#Database model
+class FileContents(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(300))
+    data = db.Column(db.LargeBinary)
+
+# Configuring databse directory
+db_path = os.path.join(os.path.dirname(__file__), 'database.db')
+db_uri = 'sqlite:///{}'.format(db_path)
+print(db_uri)
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+db = SQLAlchemy(app)
+db.create_all()
 
 
 #returns bin file of the model we have saved
@@ -28,6 +43,8 @@ def about():
 def index():
     return render_template('upload_page.html')
 
+def upload_to_database(file_path):
+    print("hello")
 
 @app.route('/Music_Genre', methods=['GET', 'POST'])
 def Music_Genre():
@@ -50,6 +67,11 @@ def Music_Genre():
         #resullt of prediction made
         result = predict_genre(f"Upload_GenreFiles/{filename}",dataset,model)
         print(result)
+
+        newFile = FileContents(name=file.filename, data=file.read()) 
+        db.session.add(newFile)
+        db.session.commit()
+
         return render_template("Music_Genre.html",result=result)
     return render_template("Music_Genre.html")
 
