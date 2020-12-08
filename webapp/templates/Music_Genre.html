@@ -19,6 +19,7 @@
             submit_button = document.getElementById("submitform")
             submit_button.disabled = false
             display_filename.innerHTML = file.files[0].name
+            handleFiles()
             return true;
         }
         else {
@@ -26,6 +27,13 @@
             file.value = ""
         }
     }
+    function handleFiles() {
+        var file = document.getElementById("uploadFileInput");
+        var files = event.target.files;
+        $("#src").attr("src", URL.createObjectURL(file.files[0]));
+        document.getElementById("audio").load();
+    }
+    
 </script>
 <form enctype="multipart/form-data" method="POST">
     <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -69,4 +77,10 @@
     </div>
 </section>
 {% endif %}
+<section class="section--center mdl-grid">
+    <audio id="audio" controls>
+      <source src="" id="src" />
+    </audio>
+    </section>
 {% endblock %}
+
